@@ -22,14 +22,11 @@ export default {
 };
 </script>
 
+
+
 <style lang="scss">
+@import './App.scss';
 @import url('https://fonts.googleapis.com/css?family=Montserrat:500');
-* {
-  margin: 0;
-  padding: 0;
-  border: none;
-  font-family: 'Montserrat', sans-serif;
-}
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
