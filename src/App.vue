@@ -88,8 +88,8 @@ export default {
   height: 100vh;
   width: 100vw;
   .main-left, .main-right {
-    height: 100vh;
-    width: 16vw;
+    height: 100%;
+    width: 15.3vw;
   }
   .main-center {
     flex: 1 1 80%;
