@@ -61,21 +61,21 @@ export default Vue.extend({
           thumbUrl: 'https://vuejs.org/images/logo.png',
         },
         {
-          id: 1,
+          id: 2,
           title: 'NUXT로 Art하게 프론트 설계해보기',
           desc: 'NUXT로 Art하게 프론트 설계해보기',
           author: '김선종, 아티프렌즈',
           thumbUrl: 'https://vuejs.org/images/logo.png',
         },
         {
-          id: 1,
+          id: 3,
           title: 'NUXT로 Art하게 프론트 설계해보기',
           desc: 'NUXT로 Art하게 프론트 설계해보기',
           author: '김선종, 아티프렌즈',
           thumbUrl: 'https://vuejs.org/images/logo.png',
         },
         {
-          id: 1,
+          id: 4,
           title: 'NUXT로 Art하게 프론트 설계해보기',
           desc: 'NUXT로 Art하게 프론트 설계해보기',
           author: '김선종, 아티프렌즈',
@@ -150,7 +150,7 @@ export default Vue.extend({
                 display: flex;
                 margin: 21px auto;
                 padding: 15px;
-                width: 530px;
+                max-width: 530px;
                 .session-thumb {
                     flex: 0 0 120px;
                     img {
@@ -161,7 +161,6 @@ export default Vue.extend({
                   display: flex;
                   flex-direction: column;
                   margin-left: 25px;
-                  height: 124px;
                   width: 100%;
                   text-align: left;
                   .session-title {
