@@ -47,7 +47,7 @@ export default {
         }
     }
     .bar-container.mobile {
-        position: sticky;
+        position: fixed;
         box-shadow: 0 5px 13px 0 rgba(0, 0, 0, 0.2);
         background: white;
         height: 8vh;
