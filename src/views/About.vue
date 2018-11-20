@@ -131,11 +131,14 @@ export default Vue.extend({
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
+    @media (max-width: 930px) {
+      justify-content: space-around;
+    }
     li.feature {
       text-align: left;
       padding-top: 65px;
       display: inline-block;
-      flex: 0 0 30%;
+      flex: 0 0 300px;
       dl {
         dt {
           font-size: 22px;

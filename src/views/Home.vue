@@ -1,5 +1,5 @@
 <template>
-    <div class="content">
+    <div class="content home">
         <section class="join-anchor-wrap">
           <div class="join-anchor-title bold">
             6th Meet Up

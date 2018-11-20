@@ -38,7 +38,7 @@ export default {
             flex-direction: column;
             justify-content: flex-end;
             h1 {
-                font-size: 30px;
+                font-size: 1.5rem;
                 font-weight: bold;
                 line-height: 0.93;
                 letter-spacing: 1.6px;
@@ -52,11 +52,11 @@ export default {
                 margin-top: 4vh;
                 margin-bottom: 8vh;
                 a > img {
-                    width: 38px;
-                    height: 38px;
+                    width: 5vmax;
+                    height: 5vmax;
                 }
                 a + a {
-                    margin-left: 2vw;
+                    margin-left: 3vmax;
                 }
             }
         }

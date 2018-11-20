@@ -1,15 +1,19 @@
 <template>
-    <div class="bar-container">
+    <div class="bar-container" v-responsive="{ mobile: el => el.width <= 500 }">
+        <!-- <img class="bar-logo" src="@/assets/vue-up.svg"> -->
         <router-link to="/about">ABOUT</router-link>
         <router-link to="/">ARCHIVE</router-link>
-        <router-link class="border" to="#">REGISTER</router-link>
+        <router-link class="register-border" to="#">REGISTER</router-link>
     </div>
 </template>
 
-<script lang="ts">
-import { Vue } from 'vue-property-decorator';
-export default class NavBar extends Vue {
-}
+<script>
+import { ResponsiveDirective } from 'vue-responsive-components';
+export default {
+    directives: {
+        responsive: ResponsiveDirective,
+    },
+};
 </script>
 
 <style lang="scss" scoped>
@@ -25,18 +29,47 @@ export default class NavBar extends Vue {
         a {
             text-decoration: none;
             color: white;
-            padding: 1.4vh 1.6vw 1.6vh 1.6vw;
+            padding: 1.6vh 1.6vw 1.6vh 1.6vw;
             letter-spacing: 1.5px;
-            font-weight: bold;
             font-size: 13px;
             font-family: 'Montserrat', sans-serif;
             transition: 0.25s;
         }
+        a.router-link-exact-active {
+            font-weight: bold;
+        } 
         a + a {
             margin-left: 1vw;
         }
-        .border {
+        .register-border {
             background: #41b883;
+            font-weight: bold;
+        }
+    }
+    .bar-container.mobile {
+        position: sticky;
+        box-shadow: 0 5px 13px 0 rgba(0, 0, 0, 0.2);
+        background: white;
+        height: 8vh;
+        width: 100vw;
+        justify-content: center;
+        align-items: center;
+        margin: 0;
+        z-index: 1;
+        a {
+            color: #34495e;
+            margin: 0;
+            font-size: 0.5rem;
+        }
+        a.router-link-exact-active {
+            font-weight: bold;
+        } 
+        a + a {
+            margin-left: 5vw;
+        }
+        .register-border {
+            color: white;
+            font-weight: bold;
         }
     }
 </style>

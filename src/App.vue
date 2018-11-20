@@ -1,11 +1,18 @@
 <template>
   <div id="app">
-    <div class="main-container">
-      <img class="main-logo" src="@/assets/vue-up.svg">
-      <img class="main-title" src="@/assets/logo-wordtype-white@2x.png">
-      <img class="main-logo reversed" src="@/assets/vue-up.svg">
-    </div>
     <nav-bar></nav-bar>
+    <div class="main-container">
+      <img class="main-left" src="@/assets/vue-left.svg">
+      <div class="main-center">
+        <img class="main-logo" src="@/assets/vue-up.svg">
+        <img class="main-title" src="@/assets/logo-wordtype-white@2x.png">
+        <img class="main-logo reversed" src="@/assets/vue-up.svg">
+      </div>
+      <img class="main-right" src="@/assets/vue-right.svg">
+    </div>
+    <transition name="slide-fade" v-if="this.showCondition">
+      <sticky-nav-bar v-if="this.showSticky"></sticky-nav-bar>
+    </transition>
     <router-view/>
     <footer-component></footer-component>
   </div>
@@ -13,11 +20,42 @@
 
 <script>
 import NavBar from './components/NavBar.vue';
+import StickyNavBar from './components/StickyNavBar.vue';
 import FooterComponent from './components/FooterComponent.vue';
 export default {
   components: {
     FooterComponent,
     NavBar,
+    StickyNavBar,
+  },
+  data() {
+    return {
+      mainContainerHeight: window.innerHeight,
+      viewWidth: window.innerWidth,
+      showSticky: false,
+    };
+  },
+  computed: {
+    showCondition() {
+      return this.viewWidth > 600 ? true : false;
+    },
+  },
+  methods: {
+    handleScroll(e) {
+      if (window.scrollY > this.mainContainerHeight) {
+        this.showSticky = true;
+      } else {
+        this.showSticky = false;
+      }
+    },
+  },
+  created() {
+    if (window.innerWidth >= 600) {
+      window.addEventListener('scroll', this.handleScroll);
+    }
+  },
+  destroyed() {
+    window.removeEventListener('scroll', this.handleScroll);
   },
 };
 </script>
@@ -44,44 +82,42 @@ export default {
 }
 .main-container {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-content: space-between;
   background: linear-gradient(rgba(34, 51, 67, 0.76)), url("./assets/main-bg-image.jpg") no-repeat;
+  background-attachment: fixed;
   background-size: cover;
   height: 100vh;
   width: 100vw;
-  .main-title {
-    width: 49vw;
-    height: 8vh;
+  .main-left, .main-right {
+    height: 100%;
+    width: 15.3vw;
   }
-  .main-logo {
-    flex: 1 1 100%;
-    width: 22.4vw;
-    height: 35.6vh;
-  }
-  .reversed {
-    transform: rotate(180deg);
+  .main-center {
+    flex: 1 1 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content:space-between;
+    align-items: center;
+    .main-title {
+      width: 49vw;
+      height: 4.5vw;
+    }
+    .main-logo {
+      height: 18vmax;
+    }
+    .reversed {
+      transform: rotate(180deg);
+    }
   }
 }
-.main-container:before {
-    content: '';
-    position: absolute;
-    right: 0;
-    top: 0;
-    width: 0;
-    height: 0;
-    border: 50vh solid transparent;
-    border-right: 15.6vw solid white;
+.slide-fade-enter-active {
+  transition: all .3s ease;
 }
-.main-container:after {
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 0;
-      width: 0;
-      height: 0;
-      border: 50vh solid transparent;
-      border-left: 15.6vw solid white;
+.slide-fade-leave-active {
+  transition: all .3s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+.slide-fade-enter, .slide-fade-leave-to
+/* .slide-fade-leave-active below version 2.1.8 */ {
+  transform: translateY(-10px);
+  opacity: 0;
 }
 </style>
