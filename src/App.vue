@@ -22,8 +22,6 @@ export default {
 };
 </script>
 
-
-
 <style lang="scss">
 @import './App.scss';
 @import url('https://fonts.googleapis.com/css?family=Montserrat:500');
