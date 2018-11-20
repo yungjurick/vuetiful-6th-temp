@@ -1,16 +1,17 @@
 <template>
   <div id="app">
     <nav-bar></nav-bar>
-    <div class="main-container">
+    <div class="main-container" :class="{ isAbout, isMobile }">
       <img class="main-left" src="@/assets/vue-left.svg">
       <div class="main-center">
         <img class="main-logo" src="@/assets/vue-up.svg">
-        <img class="main-title" src="@/assets/logo-wordtype-white@2x.png">
+        <img v-if="isHome" class="main-title" src="@/assets/logo-wordtype-white@2x.png">
+        <h1 v-if="isAbout" class="main-title-about">ABOUT US</h1>
         <img class="main-logo reversed" src="@/assets/vue-up.svg">
       </div>
       <img class="main-right" src="@/assets/vue-right.svg">
     </div>
-    <transition name="slide-fade" v-if="this.showCondition">
+    <transition name="slide-fade" v-if="this.isDesktop">
       <sticky-nav-bar v-if="this.showSticky"></sticky-nav-bar>
     </transition>
     <router-view/>
@@ -22,40 +23,69 @@
 import NavBar from './components/NavBar.vue';
 import StickyNavBar from './components/StickyNavBar.vue';
 import FooterComponent from './components/FooterComponent.vue';
+
 export default {
   components: {
     FooterComponent,
     NavBar,
     StickyNavBar,
   },
+  mounted() {
+    this.windowSize.height = window.innerHeight;
+    this.windowSize.width = window.innerWidth;
+  },
   data() {
     return {
-      mainContainerHeight: window.innerHeight,
-      viewWidth: window.innerWidth,
       showSticky: false,
+      isHome: true,
+      isAbout: false,
+      windowSize: {
+        height: null,
+        width: null,
+      },
     };
   },
   computed: {
-    showCondition() {
-      return this.viewWidth > 600 ? true : false;
+    isDesktop() {
+      return this.windowSize.height > 600 ? true : false;
+    },
+    isMobile() {
+      return this.windowSize.width < 600 ? true : false;
     },
   },
   methods: {
     handleScroll(e) {
-      if (window.scrollY > this.mainContainerHeight) {
+      if (window.scrollY > window.innerHeight) {
         this.showSticky = true;
       } else {
         this.showSticky = false;
       }
     },
+    handleResize(e) {
+      this.windowSize.height = window.innerHeight;
+      this.windowSize.width = window.innerWidth;
+    },
   },
   created() {
+    window.addEventListener('resize', this.handleResize);
     if (window.innerWidth >= 600) {
       window.addEventListener('scroll', this.handleScroll);
     }
   },
   destroyed() {
+    window.removeEventListener('resize', this.handleResize);
     window.removeEventListener('scroll', this.handleScroll);
+  },
+  watch: {
+    '$route.name'(name) {
+      if (name === 'about') {
+        this.isAbout = true;
+        this.isHome = false;
+      } else if (name === 'home') {
+        this.isHome = true;
+        this.isAbout = false;
+      }
+    },
   },
 };
 </script>
@@ -82,11 +112,19 @@ export default {
 }
 .main-container {
   display: flex;
-  background: linear-gradient(rgba(34, 51, 67, 0.76)), url("./assets/main-bg-image.jpg") no-repeat;
-  background-attachment: fixed;
-  background-size: cover;
   height: 100vh;
   width: 100vw;
+  transition: all .5s ease;
+  &:before {
+    content: '';
+    position: absolute;
+    height: 100vh;
+    width: 100vw;
+    z-index: -1;
+    background: linear-gradient(rgba(34, 51, 67, 0.76)), url("./assets/main-bg-image.jpg") no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+  }
   .main-left, .main-right {
     height: 100%;
     width: 15.3vw;
@@ -101,12 +139,26 @@ export default {
       width: 49vw;
       height: 4.5vw;
     }
+    .main-title-about {
+      font-size: 40px;
+      font-weight: bold;
+      color: white;
+    }
     .main-logo {
       height: 18vmax;
     }
     .reversed {
       transform: rotate(180deg);
     }
+  }
+}
+.isAbout {
+  background: #34495e;
+}
+.isMobile {
+  margin-top: 8vh;
+  & + .main-title-about {
+    font-size: 5px;
   }
 }
 .slide-fade-enter-active {
